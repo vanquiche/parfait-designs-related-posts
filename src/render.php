@@ -3,19 +3,21 @@
 /**
  * @see https://github.com/WordPress/gutenberg/blob/trunk/docs/reference-guides/block-api/block-metadata.md#render
  */
-$categories = get_the_category();
-$tags = get_the_tags();
 
-$category_terms = array();
-$tags_terms = array();
+// get terms of current post
+$post_categories = get_the_category();
+$post_tags = get_the_tags();
 
+$category_args = array();
+$tags_args = array();
 
-foreach ($tags as $tag) {
-	array_push($tags_terms, $tag->term_id);
+// store terms for query args
+foreach ($post_tags as $tag) {
+	array_push($tags_args, $tag->term_id);
 }
 
-foreach ($categories as $category) {
-	array_push($category_terms, $category->term_id);
+foreach ($post_categories as $category) {
+	array_push($category_args, $category->term_id);
 }
 
 $args = array(
@@ -29,29 +31,30 @@ $args = array(
 		array(
 			'taxonomy' => 'post_tag',
 			'field' => 'id',
-			'terms' => $tags_terms,
+			'terms' => $tags_args,
 		),
 		array(
 			'taxonomy' => 'category',
 			'field' => 'id',
-			'terms' => $category_terms
+			'terms' => $category_args
 		)
 	)
 );
 
 $query = new WP_Query($args);
 
-if ($query->have_posts()) :
-	while ($query->have_posts()) :
-		$query->the_post();
-?>
-		<div>
-			<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
-			<p><?php echo the_title() ?></p>
-		</div>
-	<?php endwhile ?>
+if ($query->have_posts()) : ?>
+	<h2 id='pd-related-post-heading'>Related Posts</h2>
+	<ul class='pd-related-posts' aria-labelledby="pd-related-post-heading">
+		<?php while ($query->have_posts()) :
+			$query->the_post();
+		?>
+			<li class='pd-related-posts__item'>
+				<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
+				<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
+			</li>
+		<?php endwhile ?>
+	</ul>
 <?php endif ?>
 
-<p <?php echo get_block_wrapper_attributes(); ?>>
-	<?php esc_html_e('Parfait Designs Related Posts – hello from a dynamic block!', 'parfait-designs-related-posts'); ?>
-</p>
+<?php wp_reset_postdata() ?>
