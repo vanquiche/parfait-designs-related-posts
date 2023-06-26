@@ -39,11 +39,13 @@ const OLDEST_TO_NEWEST = __("oldest-newest", "parfait-designs-related-posts");
 const A_TO_Z = __("a-z", "parfait-designs-related-posts");
 const Z_TO_A = __("z-a", "parfait-designs-related-posts");
 
+// these values must not change as it will be inserted in wordpress query argument
 const ORDERBY_DATE = "date";
 const ORDERBY_TITLE = "title";
 const ORDER_ASC = "asc";
 const ORDER_DESC = "desc";
 
+// select control options
 const options = [
 	{
 		label: __("Newest to Oldest", "parfait-designs-related-posts"),
