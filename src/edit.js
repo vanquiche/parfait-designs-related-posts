@@ -34,10 +34,10 @@ import "./editor.scss";
  *
  * @return {WPElement} Element to render.
  */
-const NEWEST_TO_OLDEST = "newest-oldest";
-const OLDEST_TO_NEWEST = "oldest-newest";
-const A_TO_Z = "a-z";
-const Z_TO_A = "z-a";
+const NEWEST_TO_OLDEST = __("newest-oldest", "parfait-designs-related-posts");
+const OLDEST_TO_NEWEST = __("oldest-newest", "parfait-designs-related-posts");
+const A_TO_Z = __("a-z", "parfait-designs-related-posts");
+const Z_TO_A = __("z-a", "parfait-designs-related-posts");
 
 const ORDERBY_DATE = "date";
 const ORDERBY_TITLE = "title";
@@ -45,10 +45,22 @@ const ORDER_ASC = "asc";
 const ORDER_DESC = "desc";
 
 const options = [
-	{ label: "Newest to Oldest", value: NEWEST_TO_OLDEST },
-	{ label: "Oldest to Newest", value: OLDEST_TO_NEWEST },
-	{ label: "A → Z", value: A_TO_Z },
-	{ label: "Z → A", value: Z_TO_A },
+	{
+		label: __("Newest to Oldest", "parfait-designs-related-posts"),
+		value: NEWEST_TO_OLDEST,
+	},
+	{
+		label: __("Oldest to Newest", "parfait-designs-related-posts"),
+		value: OLDEST_TO_NEWEST,
+	},
+	{
+		label: __("A → Z", "parfait-designs-related-posts"),
+		value: A_TO_Z,
+	},
+	{
+		label: __("Z → A", "parfait-designs-related-posts"),
+		value: Z_TO_A,
+	},
 ];
 
 function getOptionValue(order, orderby) {
@@ -85,7 +97,7 @@ export default function Edit({ attributes, setAttributes }) {
 				<fieldset className="pd-related-posts-setting">
 					<h2 className="pd-related-posts-setting-heading">Query</h2>
 					<RangeControl
-						label="Number of Posts"
+						label={__("Number of Posts", "parfait-designs-related-posts")}
 						value={attributes.postsPerPage}
 						onChange={(value) =>
 							setAttributes({
@@ -97,7 +109,10 @@ export default function Edit({ attributes, setAttributes }) {
 						max={6}
 					/>
 					<CheckboxControl
-						label="Include categories in query"
+						label={__(
+							"Include categories in query",
+							"parfait-designs-related-posts"
+						)}
 						checked={attributes.includeCategory}
 						onChange={(value) =>
 							setAttributes({ ...attributes, includeCategory: value })
@@ -105,15 +120,18 @@ export default function Edit({ attributes, setAttributes }) {
 						help="Find posts that share same category as current post."
 					/>
 					<CheckboxControl
-						label="Include tags in query"
+						label={__("Include tags in query", "parfait-designs-related-posts")}
 						checked={attributes.includeTags}
 						onChange={(value) =>
 							setAttributes({ ...attributes, includeTags: value })
 						}
-						help="Find posts that share same tags as current post."
+						help={__(
+							"Find posts that share same tags as current post.",
+							"parfait-designs-related-posts"
+						)}
 					/>
 					<SelectControl
-						label="Order by"
+						label={__("Order by", "parfait-designs-related-posts")}
 						value={getOptionValue(attributes.order, attributes.orderby)}
 						options={options}
 						onChange={(value) => {
