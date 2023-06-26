@@ -22,6 +22,7 @@ foreach ($post_categories as $category) {
 
 $args = array(
 	'post_type' => 'post',
+	'post_status' => 'publish',
 	'orderby' => 'date',
 	'order' => 'desc',
 	'posts_per_page' => 3,
@@ -50,8 +51,12 @@ if ($query->have_posts()) : ?>
 			$query->the_post();
 		?>
 			<li class='pd-related-posts__item'>
-				<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
-				<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
+				<article>
+					<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
+					<a href='<?php echo the_permalink() ?>'>
+						<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
+					</a>
+				</article>
 			</li>
 		<?php endwhile ?>
 	</ul>
