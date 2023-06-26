@@ -51,7 +51,9 @@ $query = new WP_Query($args);
 
 if ($query->have_posts()) : ?>
 	<section class='pd-related-posts-wrapper'>
-		<h2 id='pd-related-posts-heading'>Related Posts</h2>
+		<h2 id='pd-related-posts-heading'>
+			<?php esc_html_e('Related Posts', 'parfait-designs-related-posts') ?>
+		</h2>
 		<ul class='pd-related-posts' aria-labelledby="pd-related-posts-heading">
 			<?php while ($query->have_posts()) :
 				$query->the_post();
