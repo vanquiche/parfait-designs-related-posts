@@ -8,17 +8,18 @@
 $post_categories = get_the_category();
 $post_tags = get_the_tags();
 
+// terms for query argument
 $category_args = array();
 $tags_args = array();
 
-if ($attributes['includeTags']) {
+if ($attributes['includeTags'] && !is_null($post_tags)) {
 	// store terms for query args
 	foreach ($post_tags as $tag) {
 		array_push($tags_args, $tag->term_id);
 	}
 }
 
-if ($attributes['includeCategory']) {
+if ($attributes['includeCategory'] && !is_null($post_categories)) {
 	foreach ($post_categories as $category) {
 		array_push($category_args, $category->term_id);
 	}
