@@ -64,15 +64,18 @@ const options = [
 ];
 
 function getOptionValue(order, orderby) {
-	if (order === ORDER_DESC && orderby === ORDERBY_DATE) {
-		return NEWEST_TO_OLDEST;
-	} else if (order === ORDER_ASC && orderby === ORDERBY_DATE) {
-		return OLDEST_TO_NEWEST;
-	} else if (order === ORDER_ASC && orderby === ORDERBY_TITLE) {
-		return A_TO_Z;
-	} else if (order === ORDER_DESC && orderby === ORDERBY_TITLE) {
-		return Z_TO_A;
-	} else return;
+	switch (true) {
+		case order === ORDER_DESC && orderby === ORDERBY_DATE:
+			return NEWEST_TO_OLDEST;
+		case order === ORDER_ASC && orderby === ORDERBY_DATE:
+			return OLDEST_TO_NEWEST;
+		case order === ORDER_ASC && orderby === ORDERBY_TITLE:
+			return A_TO_Z;
+		case order === ORDER_DESC && orderby === ORDERBY_TITLE:
+			return Z_TO_A;
+		default:
+			break;
+	}
 }
 
 function handleSelectChange(value) {
