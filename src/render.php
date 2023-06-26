@@ -11,21 +11,25 @@ $post_tags = get_the_tags();
 $category_args = array();
 $tags_args = array();
 
-// store terms for query args
-foreach ($post_tags as $tag) {
-	array_push($tags_args, $tag->term_id);
+if ($attributes['includeTags']) {
+	// store terms for query args
+	foreach ($post_tags as $tag) {
+		array_push($tags_args, $tag->term_id);
+	}
 }
 
-foreach ($post_categories as $category) {
-	array_push($category_args, $category->term_id);
+if ($attributes['includeCategory']) {
+	foreach ($post_categories as $category) {
+		array_push($category_args, $category->term_id);
+	}
 }
 
 $args = array(
 	'post_type' => 'post',
 	'post_status' => 'publish',
-	'orderby' => 'date',
-	'order' => 'desc',
-	'posts_per_page' => 3,
+	'orderby' => $attributes['orderby'],
+	'order' => $attributes['order'],
+	'posts_per_page' => $attributes['postsPerPage'],
 	'post__not_in' => array(get_the_ID()),
 	'tax_query' => array(
 		'relation' => 'OR',
