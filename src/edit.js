@@ -3,7 +3,7 @@
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
  */
-import { __ } from '@wordpress/i18n';
+import { __ } from "@wordpress/i18n";
 
 /**
  * React hook that is used to mark the block wrapper element.
@@ -11,15 +11,20 @@ import { __ } from '@wordpress/i18n';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
  */
-import { useBlockProps } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls } from "@wordpress/block-editor";
 
+import {
+	RangeControl,
+	CheckboxControl,
+	SelectControl,
+} from "@wordpress/components";
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
  * Those files can contain any CSS code that gets applied to the editor.
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './editor.scss';
+import "./editor.scss";
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -29,10 +34,103 @@ import './editor.scss';
  *
  * @return {WPElement} Element to render.
  */
-export default function Edit() {
+const NEWEST_TO_OLDEST = "newest-oldest";
+const OLDEST_TO_NEWEST = "oldest-newest";
+const A_TO_Z = "a-z";
+const Z_TO_A = "z-a";
+
+const ORDERBY_DATE = "date";
+const ORDERBY_TITLE = "title";
+const ORDER_ASC = "asc";
+const ORDER_DESC = "desc";
+
+const options = [
+	{ label: "Newest to Oldest", value: NEWEST_TO_OLDEST },
+	{ label: "Oldest to Newest", value: OLDEST_TO_NEWEST },
+	{ label: "A to Z", value: A_TO_Z },
+	{ label: "Z to A", value: Z_TO_A },
+];
+
+function getOptionValue(order, orderby) {
+	if (order === ORDER_DESC && orderby === ORDERBY_DATE) {
+		return NEWEST_TO_OLDEST;
+	} else if (order === ORDER_ASC && orderby === ORDERBY_DATE) {
+		return OLDEST_TO_NEWEST;
+	} else if (order === ORDER_ASC && orderby === ORDERBY_TITLE) {
+		return A_TO_Z;
+	} else if (order === ORDER_DESC && orderby === ORDERBY_TITLE) {
+		return Z_TO_A;
+	} else return;
+}
+
+function handleSelectChange(value) {
+	switch (value) {
+		case NEWEST_TO_OLDEST:
+			return { order: ORDER_DESC, orderby: ORDERBY_DATE };
+		case OLDEST_TO_NEWEST:
+			return { order: ORDER_ASC, orderby: ORDERBY_DATE };
+		case A_TO_Z:
+			return { order: ORDER_ASC, orderby: ORDERBY_TITLE };
+		case Z_TO_A:
+			return { order: ORDER_DESC, orderby: ORDERBY_TITLE };
+		default:
+			break;
+	}
+}
+
+export default function Edit({ attributes, setAttributes }) {
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Parfait Designs Related Posts – hello from the editor!', 'parfait-designs-related-posts' ) }
-		</p>
+		<section {...useBlockProps()}>
+			<InspectorControls key="pd-related-posts-setting">
+				<fieldset>
+					<h3>Query</h3>
+					<RangeControl
+						label="Number of Posts"
+						value={attributes.postsPerPage}
+						onChange={(value) =>
+							setAttributes({
+								...attributes,
+								postsPerPage: value,
+							})
+						}
+						min={1}
+						max={6}
+					/>
+					<CheckboxControl
+						label="Include Posts by Category"
+						checked={attributes.includeCategory}
+						onChange={(value) =>
+							setAttributes({ ...attributes, includeCategory: value })
+						}
+					/>
+					<CheckboxControl
+						label="Include Posts by Tags"
+						checked={attributes.includeTags}
+						onChange={(value) =>
+							setAttributes({ ...attributes, includeTags: value })
+						}
+					/>
+					<SelectControl
+						label="Order by"
+						value={getOptionValue(attributes.order, attributes.orderby)}
+						options={options}
+						onChange={(value) => {
+							const updateValue = handleSelectChange(value);
+							setAttributes({
+								...attributes,
+								...updateValue,
+							});
+						}}
+					/>
+				</fieldset>
+			</InspectorControls>
+			<div>
+				<p>Order: {attributes.order}</p>
+				<p>Orderby: {attributes.orderby}</p>
+				<p>Posts Per Page: {attributes.postsPerPage}</p>
+				<p>Category: {attributes.includeCategory.toString()}</p>
+				<p>Tags: {attributes.includeTags.toString()}</p>
+			</div>
+		</section>
 	);
 }
