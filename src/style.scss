@@ -4,3 +4,36 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+
+.pd-related-posts-wrapper {
+	margin: 1rem 0;
+}
+
+.pd-related-posts-wrapper > * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.pd-related-posts-heading {
+	margin-bottom: 1rem;
+}
+
+.pd-related-posts__item {
+	max-width: 300px;
+}
+
+.pd-related-posts {
+	list-style-type: none;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+	margin: 1rem 0;
+}
+
+.pd-related-post__title {
+	margin: 0;
+	margin-top: 12px;
+	word-wrap: break-word;
+	white-space: normal;
+}

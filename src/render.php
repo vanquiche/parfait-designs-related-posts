@@ -49,21 +49,23 @@ $args = array(
 $query = new WP_Query($args);
 
 if ($query->have_posts()) : ?>
-	<h2 id='pd-related-post-heading'>Related Posts</h2>
-	<ul class='pd-related-posts' aria-labelledby="pd-related-post-heading">
-		<?php while ($query->have_posts()) :
-			$query->the_post();
-		?>
-			<li class='pd-related-posts__item'>
-				<article>
-					<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
-					<a href='<?php echo the_permalink() ?>'>
-						<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
-					</a>
-				</article>
-			</li>
-		<?php endwhile ?>
-	</ul>
+	<section class='pd-related-posts-wrapper'>
+		<h2 id='pd-related-posts-heading'>Related Posts</h2>
+		<ul class='pd-related-posts' aria-labelledby="pd-related-posts-heading">
+			<?php while ($query->have_posts()) :
+				$query->the_post();
+			?>
+				<li class='pd-related-posts__item'>
+					<article>
+						<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
+						<a href='<?php echo the_permalink() ?>'>
+							<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
+						</a>
+					</article>
+				</li>
+			<?php endwhile ?>
+		</ul>
+	</section>
 <?php endif ?>
 
 <?php wp_reset_postdata() ?>
