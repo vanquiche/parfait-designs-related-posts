@@ -95,7 +95,9 @@ export default function Edit({ attributes, setAttributes }) {
 		<>
 			<InspectorControls key="pd-related-posts-setting">
 				<fieldset className="pd-related-posts-setting">
-					<h2 className="pd-related-posts-setting-heading">Query</h2>
+					<h2 className="pd-related-posts-setting-heading">
+						{__("Query", "parfait-designs-related-posts")}
+					</h2>
 					<RangeControl
 						label={__("Number of Posts", "parfait-designs-related-posts")}
 						value={attributes.postsPerPage}
@@ -117,7 +119,10 @@ export default function Edit({ attributes, setAttributes }) {
 						onChange={(value) =>
 							setAttributes({ ...attributes, includeCategory: value })
 						}
-						help="Find posts that share same category as current post."
+						help={__(
+							"Find posts that share same category as current post.",
+							"parfait-designs-related-posts"
+						)}
 					/>
 					<CheckboxControl
 						label={__("Include tags in query", "parfait-designs-related-posts")}
