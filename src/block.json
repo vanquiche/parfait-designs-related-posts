@@ -10,6 +10,28 @@
 	"supports": {
 		"html": false
 	},
+	"attributes": {
+		"postsPerPage": {
+			"type": "number",
+			"default": 3
+		},
+		"order": {
+			"type": "string",
+			"default": "desc"
+		},
+		"orderby": {
+			"type": "string",
+			"default": "date"
+		},
+		"includeTags": {
+			"type": "boolean",
+			"default": false
+		},
+		"includeCategory": {
+			"type": "boolean",
+			"default": true
+		}
+	},
 	"textdomain": "parfait-designs-related-posts",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
