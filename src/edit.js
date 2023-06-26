@@ -47,8 +47,8 @@ const ORDER_DESC = "desc";
 const options = [
 	{ label: "Newest to Oldest", value: NEWEST_TO_OLDEST },
 	{ label: "Oldest to Newest", value: OLDEST_TO_NEWEST },
-	{ label: "A to Z", value: A_TO_Z },
-	{ label: "Z to A", value: Z_TO_A },
+	{ label: "A → Z", value: A_TO_Z },
+	{ label: "Z → A", value: Z_TO_A },
 ];
 
 function getOptionValue(order, orderby) {
@@ -80,35 +80,37 @@ function handleSelectChange(value) {
 
 export default function Edit({ attributes, setAttributes }) {
 	return (
-		<section {...useBlockProps()}>
+		<>
 			<InspectorControls key="pd-related-posts-setting">
-				<fieldset>
-					<h3>Query</h3>
+				<fieldset className="pd-related-posts-setting">
+					<h2 className="pd-related-posts-setting-heading">Query</h2>
 					<RangeControl
 						label="Number of Posts"
 						value={attributes.postsPerPage}
 						onChange={(value) =>
 							setAttributes({
 								...attributes,
-								postsPerPage: value,
+								postsPerPage: parseInt(value),
 							})
 						}
 						min={1}
 						max={6}
 					/>
 					<CheckboxControl
-						label="Include Posts by Category"
+						label="Include categories in query"
 						checked={attributes.includeCategory}
 						onChange={(value) =>
 							setAttributes({ ...attributes, includeCategory: value })
 						}
+						help="Find posts that share same category as current post."
 					/>
 					<CheckboxControl
-						label="Include Posts by Tags"
+						label="Include tags in query"
 						checked={attributes.includeTags}
 						onChange={(value) =>
 							setAttributes({ ...attributes, includeTags: value })
 						}
+						help="Find posts that share same tags as current post."
 					/>
 					<SelectControl
 						label="Order by"
@@ -124,13 +126,26 @@ export default function Edit({ attributes, setAttributes }) {
 					/>
 				</fieldset>
 			</InspectorControls>
-			<div>
-				<p>Order: {attributes.order}</p>
-				<p>Orderby: {attributes.orderby}</p>
-				<p>Posts Per Page: {attributes.postsPerPage}</p>
-				<p>Category: {attributes.includeCategory.toString()}</p>
-				<p>Tags: {attributes.includeTags.toString()}</p>
-			</div>
-		</section>
+			<section
+				{...useBlockProps({
+					className: "pd-editor-related-posts-wrapper",
+				})}
+			>
+				<h2 className="pd-editor-related-post-heading">Related Posts</h2>
+				<ul className="pd-editor-related-posts">
+					{[...new Array(attributes.postsPerPage)].map((_, i) => (
+						<li className="pd-editor-related-posts__item">
+							<article className="pd-editor-related-post">
+								<div
+									className="pd-editor-related-post__thumbnail"
+									aria-hidden="true"
+								></div>
+								<h3 className="pd-editor-related-post__title">Post Title</h3>
+							</article>
+						</li>
+					))}
+				</ul>
+			</section>
+		</>
 	);
 }
