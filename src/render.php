@@ -12,14 +12,14 @@ $post_tags = get_the_tags();
 $category_args = array();
 $tags_args = array();
 
-if ($attributes['includeTags'] && !is_null($post_tags)) {
+if ($attributes['includeTags'] && is_array($post_tags)) {
 	// store terms for query args
 	foreach ($post_tags as $tag) {
 		array_push($tags_args, $tag->term_id);
 	}
 }
 
-if ($attributes['includeCategory'] && !is_null($post_categories)) {
+if ($attributes['includeCategory'] && is_array($post_categories)) {
 	foreach ($post_categories as $category) {
 		array_push($category_args, $category->term_id);
 	}
