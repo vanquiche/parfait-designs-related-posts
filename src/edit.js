@@ -131,7 +131,9 @@ export default function Edit({ attributes, setAttributes }) {
 					className: "pd-editor-related-posts-wrapper",
 				})}
 			>
-				<h2 className="pd-editor-related-post-heading">Related Posts</h2>
+				<h2 className="pd-editor-related-post-heading">
+					{__("Related Posts", "parfait-designs-related-posts")}
+				</h2>
 				<ul className="pd-editor-related-posts">
 					{[...new Array(attributes.postsPerPage)].map((_, i) => (
 						<li className="pd-editor-related-posts__item">
@@ -140,7 +142,9 @@ export default function Edit({ attributes, setAttributes }) {
 									className="pd-editor-related-post__thumbnail"
 									aria-hidden="true"
 								></div>
-								<h3 className="pd-editor-related-post__title">Post Title</h3>
+								<h3 className="pd-editor-related-post__title">
+									{__("Post Title", "parfait-designs-related-posts")}
+								</h3>
 							</article>
 						</li>
 					))}

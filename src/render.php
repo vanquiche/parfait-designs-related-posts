@@ -60,7 +60,9 @@ if ($query->have_posts()) : ?>
 					<article>
 						<?php echo get_the_post_thumbnail(null, 'medium', array('class' => 'pd-related-post__thumbnail')) ?>
 						<a href='<?php echo the_permalink() ?>'>
-							<h3 class='pd-related-post__title'><?php echo the_title() ?></h3>
+							<h3 class='pd-related-post__title'>
+								<?php echo the_title() ?>
+							</h3>
 						</a>
 					</article>
 				</li>
